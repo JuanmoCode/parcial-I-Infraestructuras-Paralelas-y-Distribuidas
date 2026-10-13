@@ -11,12 +11,12 @@ TAMANOS = {
 }
 
 
-def crear_tablero(tamano):
+def create_board(tamano):
     """Crea una matriz aleatoria de ceros y unos."""
     return np.random.randint(0, 2, size=(tamano, tamano), dtype=np.uint8)
 
 
-def siguiente_generacion(tablero):
+def avanzar_hilos(tablero):
     """Calcula la siguiente generación del Juego de la Vida."""
 
     # Contar vecinos vivos de cada celda.
@@ -63,7 +63,7 @@ def main():
         return
 
     filas, columnas = TAMANOS[opcion]
-    tablero = crear_tablero(filas)
+    tablero = create_board(filas)
 
     generaciones = int(input("Número de generaciones: "))
 
@@ -78,7 +78,7 @@ def main():
     inicio = time.perf_counter()
 
     for generacion in range(1, generaciones + 1):
-        tablero = siguiente_generacion(tablero)
+        tablero = avanzar_hilos(tablero)
 
         print(f"\nGeneración {generacion}:")
         mostrar_tablero(tablero)

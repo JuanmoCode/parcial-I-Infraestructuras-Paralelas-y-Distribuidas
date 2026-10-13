@@ -3,7 +3,8 @@ import pygame
 import numpy as np
 import time
 
-from sec_version import crear_tablero, siguiente_generacion
+from sec_version import create_board
+from parallelt import avanzar_hilos
 
 
 # =========================================================
@@ -51,7 +52,7 @@ fuente_titulo = pygame.font.SysFont("monospace", 30, bold=True)
 # =========================================================
 
 tamano = 100
-tablero = crear_tablero(tamano)
+tablero = create_board(tamano)
 
 ejecutando = False
 velocidad = 10
@@ -270,7 +271,7 @@ def reiniciar(nuevo_tamano=None):
     if nuevo_tamano is not None:
         tamano = nuevo_tamano
 
-    tablero = crear_tablero(tamano)
+    tablero = create_board(tamano)
     ejecutando = False
     generacion = 0
     acumulado = 0.0
@@ -280,7 +281,7 @@ def avanzar():
     global tablero, generacion, tiempo_generacion
 
     inicio = time.perf_counter()
-    tablero = siguiente_generacion(tablero)
+    tablero = avanzar_hilos(tablero)
     tiempo_generacion = time.perf_counter() - inicio
     generacion += 1
 
