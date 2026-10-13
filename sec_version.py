@@ -16,7 +16,7 @@ def create_board(tamano):
     return np.random.randint(0, 2, size=(tamano, tamano), dtype=np.uint8)
 
 
-def avanzar_hilos(tablero):
+def step_sequential(tablero):
     """Calcula la siguiente generación del Juego de la Vida."""
 
     # Contar vecinos vivos de cada celda.
@@ -78,7 +78,7 @@ def main():
     inicio = time.perf_counter()
 
     for generacion in range(1, generaciones + 1):
-        tablero = avanzar_hilos(tablero)
+        tablero = step_sequential(tablero)
 
         print(f"\nGeneración {generacion}:")
         mostrar_tablero(tablero)

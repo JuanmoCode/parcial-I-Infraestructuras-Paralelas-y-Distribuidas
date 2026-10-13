@@ -17,7 +17,7 @@ import time
 
 import numpy as np
 
-from sec_version import siguiente_generacion
+from sec_version import step_sequential
 
 
 # =========================================================
@@ -57,10 +57,10 @@ def trabajador(id_, franja, cola_ordenes, cola_resultados,
                 fantasma_inferior[np.newaxis, :],
             ))
 
-            # 4) Calcular y quedarse solo con las filas reales.
-            #    Las filas fantasma del resultado son incorrectas (np.roll
-            #    envuelve en filas) pero se descartan.
-            franja = siguiente_generacion(bloque)[1:-1]
+            # 4) Calcular sobre el bloque ampliado y quedarse solo con las
+            #    filas reales. Las filas fantasma del resultado son incorrectas
+            #    (np.roll envuelve en filas) pero se descartan.
+            franja = step_sequential(bloque)[1:-1]
 
         cola_resultados.put(("FRANJA", id_, franja))
 
