@@ -5,6 +5,7 @@ bordes de sus vecinos) -> no hay condiciones de carrera ni hacen falta Locks.
 La Barrier garantiza que nadie empieza la generacion g+1 antes de que todos
 terminen la g."""
 import threading
+
 import numpy as np
 
 
