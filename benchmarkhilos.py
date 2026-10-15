@@ -12,7 +12,7 @@ from parallelt import avanzar_hilos
 
 
 SIZES = [100, 500, 1000, 1500, 2000, 2500, 3000]
-THREAD_COUNTS = [2, 4]
+THREAD_COUNTS = [2, 4, 8, 16]
 GENERATIONS = 100
 REPEATS = 5
 
@@ -70,8 +70,7 @@ def main():
 
     for mode, workers, label in [
         ("SEQ", 1, "Secuencial"),
-        ("HILOS", 2, "2 hilos"),
-        ("HILOS", 4, "4 hilos"),
+        *(("HILOS", threads, f"{threads} hilos") for threads in THREAD_COUNTS),
     ]:
         subset = [r for r in rows if r["mode"] == mode and r["workers"] == workers]
         if subset:
