@@ -14,7 +14,7 @@ from parallelt import avanzar_hilos
 SIZES = [100, 500, 1000, 1500, 2000, 2500, 3000]
 THREAD_COUNTS = [2, 4]
 GENERATIONS = 100
-REPEATS = 1
+REPEATS = 5
 
 
 def measure_sequential(board):
