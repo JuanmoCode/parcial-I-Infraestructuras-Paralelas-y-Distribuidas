@@ -18,31 +18,26 @@ def create_board(tamano):
 
 def step_sequential(tablero):
     """Calcula la siguiente generación del Juego de la Vida."""
+    filas, columnas = tablero.shape
+
+    # Tablero toroidal: se rodea con un marco de una celda que copia
+    # los bordes opuestos.
+    ext = np.pad(tablero, 1, mode="wrap")
 
     # Contar vecinos vivos de cada celda.
     vecinos = np.zeros_like(tablero, dtype=np.uint8)
 
-    for desplazamiento_fila in (-1, 0, 1):
-        for desplazamiento_columna in (-1, 0, 1):
-
-            if desplazamiento_fila == 0 and desplazamiento_columna == 0:
+    for di in range(3):
+        for dj in range(3):
+            if di == 1 and dj == 1:
                 continue
+            vecinos += ext[di:di + filas, dj:dj + columnas]
 
-            vecinos += np.roll(
-                np.roll(tablero, desplazamiento_fila, axis=0),
-                desplazamiento_columna,
-                axis=1
-            )
-
-    # Reglas de Conway.
-    sobrevive = (tablero == 1) & (
-        (vecinos == 2) | (vecinos == 3)
-    )
-
-    nace = (tablero == 0) & (vecinos == 3)
-
-    # Las celdas vivas se representan con 1 y las muertas con 0.
-    return (sobrevive | nace).astype(np.uint8)
+    # Reglas de Conway:
+    # con 3 vecinos la celda queda viva (nace o sobrevive);
+    # con 2 vecinos solo queda viva si ya estaba viva;
+    # en cualquier otro caso queda muerta.
+    return ((vecinos == 3) | ((tablero == 1) & (vecinos == 2))).astype(np.uint8)
 
 
 def mostrar_tablero(tablero):
